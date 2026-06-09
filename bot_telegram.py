@@ -91,7 +91,8 @@ def analisa_saham(kode_saham):
 
 if __name__ == "__main__":
     # Daftar saham yang akan dipantau otomatis oleh bot
-    daftar_pantauan = ["BBCA.JK", "BBRI.JK", "SIDO.JK", "BJTM.JK", "TLKM.JK"]
+    daftar_pantauan = ["WIFI.JK", "ELSA.JK", "MEDC.JK", "SMRA.JK", "BSDE.JK", 
+                       "BBCA.JK", "BBRI.JK", "SIDO.JK", "BJTM.JK", "TLKM.JK"]
     
     print("Memulai proses pengecekan pasar...")
     for saham in daftar_pantauan:
