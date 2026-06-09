@@ -52,7 +52,7 @@ st.markdown("""
             margin-bottom: 1.5rem;
         }
         
-        /* Animasi halu pada tombol analisis */
+        /* Animasi halus pada tombol analisis */
         .stButton>button {
             background: linear-gradient(135deg, #38bdf8 0%, #0369a1 100%) !important;
             color: white !important;
@@ -93,10 +93,8 @@ try:
         # Menangani format MultiIndex dari update yfinance terbaru jika ada
         if isinstance(df_ihsg.columns, pd.MultiIndex):
             ihsg_close = df_ihsg['Close']['^JKSE'].dropna()
-            ihsg_open = df_ihsg['Open']['^JKSE'].dropna()
         else:
             ihsg_close = df_ihsg['Close'].dropna()
-            ihsg_open = df_ihsg['Open'].dropna()
             
         ihsg_sekarang = float(ihsg_close.iloc[-1])
         ihsg_sebelumnya = float(ihsg_close.iloc[-2]) if len(ihsg_close) > 1 else ihsg_sekarang
@@ -124,14 +122,16 @@ try:
                 fill='tozeroy',
                 fillcolor='rgba(16, 185, 129, 0.05)' if perubahan_harga >= 0 else 'rgba(239, 68, 68, 0.05)'
             ))
+            
+            # --- BAGIAN YANG DIPERBAIKI (colors menjadi color) ---
             fig_ihsg.update_layout(
                 height=180,
                 margin=dict(l=20, r=20, t=10, b=10),
                 template='plotly_dark',
                 paper_bgcolor='rgba(0,0,0,0)',
                 plot_bgcolor='rgba(0,0,0,0)',
-                xaxis=dict(showgrid=False, colors='#64748b'),
-                yaxis=dict(showgrid=True, gridcolor='#1e293b', colors='#64748b', side='right'),
+                xaxis=dict(showgrid=False, color='#64748b'), 
+                yaxis=dict(showgrid=True, gridcolor='#1e293b', color='#64748b', side='right'),
                 hovermode='x unified'
             )
             st.plotly_chart(fig_ihsg, use_container_width=True, config={'displayModeBar': False})
@@ -170,14 +170,8 @@ if st.button("Jalankan Algoritma Prediksi"):
         else:
             if isinstance(data.columns, pd.MultiIndex):
                 close_prices = data['Close'][kode_saham].dropna()
-                open_prices = data['Open'][kode_saham].dropna()
-                high_prices = data['High'][kode_saham].dropna()
-                low_prices = data['Low'][kode_saham].dropna()
             else:
                 close_prices = data['Close'].dropna()
-                open_prices = data['Open'].dropna()
-                high_prices = data['High'].dropna()
-                low_prices = data['Low'].dropna()
 
             df = pd.DataFrame({'Close': close_prices})
             
@@ -236,18 +230,8 @@ if st.button("Jalankan Algoritma Prediksi"):
             # Pembuatan Grafik Proyeksi Candlestick + Line Gabungan Premium
             fig_pred = go.Figure()
             
-            # Batasi visual historis 80 poin ke belakang agar grafik tetap fokus dan sedap dipandang
+            # Batasi visual historis 80 poin ke belakang agar grafik tetap fokus
             hist_plot = df.iloc[-80:]
-            
-            # Ambil potongan data candle pendukung grafik historis
-            if isinstance(data.columns, pd.MultiIndex):
-                hist_open = open_prices.loc[hist_plot.index]
-                hist_high = high_prices.loc[hist_plot.index]
-                hist_low = low_prices.loc[hist_plot.index]
-            else:
-                hist_open = open_prices.loc[hist_plot.index]
-                hist_high = high_prices.loc[hist_plot.index]
-                hist_low = low_prices.loc[hist_plot.index]
             
             # Plot data historis asli dalam bentuk area line premium yang bersih
             fig_pred.add_trace(go.Scatter(
