@@ -1,6 +1,7 @@
-xgboost
+streamlit
+yfinance
 pandas
 numpy
+xgboost
 scikit-learn
-yfinance
 requests
