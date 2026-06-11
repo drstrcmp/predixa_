@@ -4,6 +4,8 @@ import numpy as np
 from xgboost import XGBRegressor
 from datetime import timedelta
 import requests
+# Di bagian atas file bot_telegram.py kamu:
+from predixa_core_engine import ekstrak_fitur_megaprofit
 
 def kirim_notif_telegram(saham, harga_sekarang, rekomendasi, target):
     # Menggunakan token dan ID yang sudah kamu siapkan
