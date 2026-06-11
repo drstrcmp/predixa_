@@ -6,6 +6,8 @@ from xgboost import XGBRegressor
 import plotly.graph_objects as go
 from datetime import timedelta
 import requests
+# Di bagian atas file app.py kamu, tambahkan baris ini:
+from predixa_core_engine import ekstrak_fitur_megaprofit
 
 # --- FUNGSI NOTIFIKASI TELEGRAM ---
 def kirim_notif_telegram(saham, harga_sekarang, rekomendasi, target):
